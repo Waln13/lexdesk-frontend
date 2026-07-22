@@ -1,0 +1,95 @@
+✅ Login con diseño legal
+✅ Autenticación con JWT
+✅ Rutas protegidas
+✅ Sidebar con navegación
+✅ Dashboard con stats
+✅ Clientes
+✅ Casos
+
+Dashboard:
+1. Ultima actividad, Hace 5 min, Pedro García, subio un Documento hace 20 min Caso #123 actualizado.
+2. gráfica circular: Nuevo, En proceso, Pendiente, Cerrado.
+3. panel de prioridad: ⚠ Casos Urgentes, Caso #58, Audiencia mañana, Abogado Luis, Pendiente documento.
+
+
+PESTAÑA DE Casos:
+1. Número de expediente, EXP-2026-0001 O LMS-0001
+2. Fecha, Fecha creación 07/07/2026 EXCELENTE PARA ORDENAR
+3. Abogado asignado, Porque el administrador debe saber quién lleva cada caso.
+4. Barra de Búsqueda arriba, filtros: Estado, Área, Abogado, Fecha aumentar la velocidad de busqueda de los Casos.
+5. Agregar una línea de tiempo al expediente. (Caso
+
+Divorcio García
+
+-------------------------
+
+07/07
+
+Caso creado
+
+-------------------------
+
+08/07
+
+Documento agregado
+
+-------------------------
+
+09/07
+
+Audiencia programada
+
+-------------------------
+
+12/07
+
+Cliente entregó contrato)
+
+PESTAÑA Cliente
+
+1. BARRA DE busqueda arriba, 🔍 Buscar cliente...
+2.Filtros todos, activos, con procesos y sin procesos...
+3. cuando demos clic en Cliente un menu desplegable: (Juan Pérez
+
+-------------------------
+
+📞 809-xxx-xxxx
+
+📧 correo@email.com
+
+📍 Santo Domingo
+
+-------------------------
+
+Casos
+
+• Divorcio García
+
+• Demanda Laboral
+
+-------------------------
+
+Documentos
+
+Contrato.pdf
+
+Cédula.pdf
+
+Poder.pdf
+
+-------------------------
+
+Próxima cita
+
+15 Julio
+
+10:00 AM)
+
+
+
+PESTAÑA agendas
+1. Seleccionar abogado, Ahora mismo el abogado viene implícito por el caso.Abogado asignado
+
+Luis Martínez
+
+2.linea de tiempo, 
