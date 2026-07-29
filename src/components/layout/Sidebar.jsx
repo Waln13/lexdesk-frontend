@@ -25,19 +25,18 @@ export default function Sidebar() {
     <aside className="w-64 min-h-screen bg-gray-900 border-r border-gray-800 flex flex-col">
 
       {/* Logo */}
-      <div className="px-6 py-6 border-b border-gray-800">
-        <h1 className="text-2xl font-bold text-white font-serif">
-          Lex<span className="text-emerald-500">Desk</span>
-        </h1>
-        <p className="text-gray-600 text-xs tracking-widest uppercase mt-0.5">
-          Sistema Legal
-        </p>
+      <div className="px-6 py-5 border-b border-gray-800 flex items-center justify-center">
+        <img
+          src="/src/assets/logo.png"
+          alt="Grupo Legal F. Contreras"
+          className="h-16 object-contain"
+        />
       </div>
 
       {/* Usuario */}
       <div className="px-6 py-4 border-b border-gray-800">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full bg-emerald-700/40 border border-emerald-700/60 flex items-center justify-center text-emerald-400 text-sm font-bold">
+          <div className="w-8 h-8 rounded-full bg-yellow-700/40 border border-yellow-700/60 flex items-center justify-center text-yellow-400 text-sm font-bold">
             {usuario?.nombre?.charAt(0) || "U"}
           </div>
           <div>
@@ -59,7 +58,7 @@ export default function Sidebar() {
               onClick={() => navigate(item.path)}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition ${
                 active
-                  ? "bg-emerald-700/20 text-emerald-400 border border-emerald-700/30"
+                  ? "bg-yellow-700/20 text-yellow-400 border border-yellow-700/30"
                   : "text-gray-400 hover:bg-gray-800 hover:text-white"
               }`}
             >

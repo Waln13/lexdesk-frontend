@@ -14,6 +14,10 @@ const ESTADOS = {
 const TIPOS = ["CONSULTA", "REPRESENTACION"];
 const AREAS = ["Derecho Familiar", "Derecho Penal", "Derecho Civil", "Derecho Laboral", "Derecho Comercial", "Otro"];
 
+const formatFecha = (fecha) => new Date(fecha).toLocaleDateString("es-DO", {
+  day: "numeric", month: "short", year: "numeric",
+});
+
 export default function Casos() {
   const [casos, setCasos] = useState([]);
   const [clientes, setClientes] = useState([]);
@@ -21,9 +25,10 @@ export default function Casos() {
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
   const [editando, setEditando] = useState(null);
+  const [busqueda, setBusqueda] = useState("");
   const [form, setForm] = useState({
     titulo: "", descripcion: "", tipo: "CONSULTA",
-    area: "", clienteId: "", estado: "NUEVO", abogadoId: "",
+    area: "", clienteId: "", estado: "NUEVO", abogadoId: "", numeroExpediente: "",
   });
 
   const cargar = async () => {
@@ -38,6 +43,16 @@ export default function Casos() {
 
   useEffect(() => { cargar(); }, []);
 
+  const casosFiltrados = casos.filter((c) => {
+    const q = busqueda.toLowerCase();
+    return (
+      c.titulo?.toLowerCase().includes(q) ||
+      c.numeroExpediente?.toLowerCase().includes(q) ||
+      c.cliente?.nombre?.toLowerCase().includes(q) ||
+      c.area?.toLowerCase().includes(q)
+    );
+  });
+
   const abrirModal = (caso = null) => {
     if (caso) {
       setEditando(caso);
@@ -49,10 +64,11 @@ export default function Casos() {
         clienteId: caso.clienteId,
         estado: caso.estado,
         abogadoId: caso.abogadoId || "",
+        numeroExpediente: caso.numeroExpediente || "",
       });
     } else {
       setEditando(null);
-      setForm({ titulo: "", descripcion: "", tipo: "CONSULTA", area: "", clienteId: "", estado: "NUEVO", abogadoId: "" });
+      setForm({ titulo: "", descripcion: "", tipo: "CONSULTA", area: "", clienteId: "", estado: "NUEVO", abogadoId: "", numeroExpediente: "" });
     }
     setModal(true);
   };
@@ -93,40 +109,61 @@ export default function Casos() {
 
   return (
     <MainLayout>
+      {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
           <h2 className="text-2xl font-bold text-white">Casos</h2>
-          <p className="text-gray-500 text-sm mt-1">{casos.length} casos registrados</p>
+          <p className="text-gray-500 text-sm mt-1">{casosFiltrados.length} casos</p>
         </div>
-        <button
-          onClick={() => abrirModal()}
-          className="bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition"
-        >
-          + Nuevo Caso
-        </button>
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <input
+              type="text"
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              placeholder="Buscar por título, expediente, cliente..."
+              className="bg-gray-800 border border-gray-700 text-white rounded-lg pl-9 pr-4 py-2.5 text-sm placeholder-gray-600 focus:outline-none focus:border-emerald-600 transition w-72"
+            />
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">🔍</span>
+          </div>
+          <button
+            onClick={() => abrirModal()}
+            className="bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition"
+          >
+            + Nuevo Caso
+          </button>
+        </div>
       </div>
 
+      {/* Tabla */}
       <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-gray-800 text-gray-500 text-xs uppercase tracking-wider">
+              <th className="text-left px-6 py-4">No. Expediente</th>
               <th className="text-left px-6 py-4">Título</th>
               <th className="text-left px-6 py-4">Cliente</th>
               <th className="text-left px-6 py-4">Tipo</th>
               <th className="text-left px-6 py-4">Área</th>
               <th className="text-left px-6 py-4">Abogado</th>
               <th className="text-left px-6 py-4">Estado</th>
+              <th className="text-left px-6 py-4">Fecha</th>
               <th className="text-left px-6 py-4">Acciones</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={7} className="text-center py-12 text-gray-600">Cargando...</td></tr>
-            ) : casos.length === 0 ? (
-              <tr><td colSpan={7} className="text-center py-12 text-gray-600">No hay casos registrados</td></tr>
+              <tr><td colSpan={9} className="text-center py-12 text-gray-600">Cargando...</td></tr>
+            ) : casosFiltrados.length === 0 ? (
+              <tr><td colSpan={9} className="text-center py-12 text-gray-600">No hay casos registrados</td></tr>
             ) : (
-              casos.map((c) => (
+              casosFiltrados.map((c) => (
                 <tr key={c.id} className="border-b border-gray-800/50 hover:bg-gray-800/30 transition">
+                  <td className="px-6 py-4">
+                    <span className="text-emerald-400 text-xs font-mono">
+                      {c.numeroExpediente || "—"}
+                    </span>
+                  </td>
                   <td className="px-6 py-4">
                     <p className="text-white font-medium">{c.titulo}</p>
                     {c.descripcion && <p className="text-gray-600 text-xs mt-0.5 truncate max-w-[200px]">{c.descripcion}</p>}
@@ -140,6 +177,7 @@ export default function Casos() {
                   <td className="px-6 py-4 text-gray-400 text-xs">{c.area || "—"}</td>
                   <td className="px-6 py-4 text-gray-400 text-xs">{c.abogado?.nombre || "Sin asignar"}</td>
                   <td className="px-6 py-4">{estadoBadge(c.estado)}</td>
+                  <td className="px-6 py-4 text-gray-500 text-xs">{formatFecha(c.creadoEn)}</td>
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2">
                       <button
@@ -163,14 +201,35 @@ export default function Casos() {
         </table>
       </div>
 
+      {/* Modal */}
       {modal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-          <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 w-full max-w-lg shadow-2xl">
+          <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 w-full max-w-lg shadow-2xl overflow-y-auto max-h-[90vh]">
             <h3 className="text-white font-semibold text-lg mb-6">
               {editando ? "Editar Caso" : "Nuevo Caso"}
             </h3>
 
+            {editando && (
+              <div className="bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-2.5 mb-4 flex items-center justify-between">
+                <span className="text-gray-500 text-xs uppercase tracking-wider">Creado el</span>
+                <span className="text-gray-300 text-xs">{formatFecha(editando.creadoEn)}</span>
+              </div>
+            )}
+
             <div className="space-y-4">
+              <div>
+                <label className="text-gray-400 text-xs uppercase tracking-wider mb-1.5 block">
+                  No. Expediente
+                </label>
+                <input
+                  type="text"
+                  value={form.numeroExpediente}
+                  onChange={(e) => setForm({ ...form, numeroExpediente: e.target.value })}
+                  placeholder="Ej: EXP-2026-001"
+                  className="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-2.5 text-sm placeholder-gray-600 focus:outline-none focus:border-emerald-600 transition font-mono"
+                />
+              </div>
+
               <div>
                 <label className="text-gray-400 text-xs uppercase tracking-wider mb-1.5 block">
                   Título <span className="text-red-500">*</span>
@@ -202,7 +261,10 @@ export default function Casos() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-gray-400 text-xs uppercase tracking-wider mb-1.5 block">Tipo</label>
+                  <label className="text-gray-400 text-xs uppercase tracking-wider mb-1.5 block">
+                    Tipo
+                  </label>
+                  <p className="text-gray-600 text-xs mb-2">¿Es una consulta puntual o el abogado va a representar al cliente?</p>
                   <select
                     value={form.tipo}
                     onChange={(e) => setForm({ ...form, tipo: e.target.value })}
@@ -215,7 +277,10 @@ export default function Casos() {
                 </div>
 
                 <div>
-                  <label className="text-gray-400 text-xs uppercase tracking-wider mb-1.5 block">Estado</label>
+                  <label className="text-gray-400 text-xs uppercase tracking-wider mb-1.5 block">
+                    Estado
+                  </label>
+                  <p className="text-gray-600 text-xs mb-2">¿En qué etapa está el caso actualmente?</p>
                   <select
                     value={form.estado}
                     onChange={(e) => setForm({ ...form, estado: e.target.value })}

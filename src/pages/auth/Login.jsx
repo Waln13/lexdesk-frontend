@@ -47,8 +47,8 @@ export default function Login() {
       {/* Fondo decorativo */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950" />
-        <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] rounded-full bg-emerald-900/10 blur-3xl" />
-        <div className="absolute bottom-[-100px] right-[-100px] w-[400px] h-[400px] rounded-full bg-emerald-900/10 blur-3xl" />
+        <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] rounded-full bg-yellow-900/10 blur-3xl" />
+        <div className="absolute bottom-[-100px] right-[-100px] w-[400px] h-[400px] rounded-full bg-yellow-900/10 blur-3xl" />
         <div className="absolute inset-0 opacity-5"
           style={{
             backgroundImage: "repeating-linear-gradient(90deg, #fff 0px, #fff 1px, transparent 1px, transparent 80px)",
@@ -65,28 +65,34 @@ export default function Login() {
         ⚖
       </div>
 
+      {/* Contenido principal */}
       <div className="w-full max-w-md relative z-10">
+
+        {/* Logo */}
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-2">
-            <div className="h-px w-12 bg-emerald-700/60" />
-            <span className="text-emerald-600/80 text-xs tracking-[0.3em] uppercase font-medium">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="h-px w-12 bg-yellow-700/60" />
+            <span className="text-yellow-600/80 text-xs tracking-[0.3em] uppercase font-medium">
               Sistema Legal
             </span>
-            <div className="h-px w-12 bg-emerald-700/60" />
+            <div className="h-px w-12 bg-yellow-700/60" />
           </div>
-          <h1 className="text-5xl font-bold text-white tracking-tight font-serif">
-            Lex<span className="text-emerald-500">Desk</span>
-          </h1>
-          <p className="text-gray-500 mt-2 text-xs tracking-widest uppercase">
-            Gestión de Firma de Abogados
+          <img
+            src="/src/assets/logo.png"
+            alt="Grupo Legal F. Contreras"
+            className="h-32 mx-auto object-contain"
+          />
+          <p className="text-gray-500 mt-3 text-xs tracking-widest uppercase">
+            Sistema de Gestión
           </p>
         </div>
 
+        {/* Card */}
         <div className="bg-gray-900/80 backdrop-blur-sm border border-gray-800/80 rounded-2xl p-8 shadow-2xl">
           <div className="flex items-center gap-3 mb-6">
-            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-emerald-800/50" />
-            <span className="text-emerald-600/60 text-xs tracking-widest uppercase">Acceso</span>
-            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-emerald-800/50" />
+            <div className="h-px flex-1 bg-gradient-to-r from-transparent to-yellow-800/50" />
+            <span className="text-yellow-600/60 text-xs tracking-widest uppercase">Acceso</span>
+            <div className="h-px flex-1 bg-gradient-to-l from-transparent to-yellow-800/50" />
           </div>
 
           {error && (
@@ -106,8 +112,8 @@ export default function Login() {
                 value={form.email}
                 onChange={handleChange}
                 required
-                placeholder="ejemplo@lexdesk.com"
-                className="w-full bg-gray-800/80 border border-gray-700/80 text-white rounded-lg px-4 py-2.5 text-sm placeholder-gray-600 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600/30 transition"
+                placeholder="ejemplo@grupolegal.com"
+                className="w-full bg-gray-800/80 border border-gray-700/80 text-white rounded-lg px-4 py-2.5 text-sm placeholder-gray-600 focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-600/30 transition"
               />
             </div>
 
@@ -122,14 +128,14 @@ export default function Login() {
                 onChange={handleChange}
                 required
                 placeholder="••••••••"
-                className="w-full bg-gray-800/80 border border-gray-700/80 text-white rounded-lg px-4 py-2.5 text-sm placeholder-gray-600 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600/30 transition"
+                className="w-full bg-gray-800/80 border border-gray-700/80 text-white rounded-lg px-4 py-2.5 text-sm placeholder-gray-600 focus:outline-none focus:border-yellow-600 focus:ring-1 focus:ring-yellow-600/30 transition"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-emerald-700 hover:bg-emerald-600 disabled:bg-emerald-900 disabled:cursor-not-allowed text-white font-semibold rounded-lg py-2.5 text-sm tracking-wide transition mt-2"
+              className="w-full bg-yellow-700 hover:bg-yellow-600 disabled:bg-yellow-900 disabled:cursor-not-allowed text-white font-semibold rounded-lg py-2.5 text-sm tracking-wide transition mt-2"
             >
               {loading ? "Verificando..." : "Ingresar al Sistema"}
             </button>
@@ -143,7 +149,7 @@ export default function Login() {
         </div>
 
         <p className="text-center text-gray-700 text-xs mt-6 tracking-widest uppercase">
-          LexDesk © {new Date().getFullYear()} — Confidencial
+          Grupo Legal F. Contreras © {new Date().getFullYear()} — Confidencial
         </p>
       </div>
     </div>
