@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import MainLayout from "../../components/layout/MainLayout";
 import { getCasos, crearCaso, actualizarCaso, eliminarCaso } from "../../services/casoService";
 import { getClientes } from "../../services/clienteService";
@@ -19,6 +20,7 @@ const formatFecha = (fecha) => new Date(fecha).toLocaleDateString("es-DO", {
 });
 
 export default function Casos() {
+  const navigate = useNavigate();
   const [casos, setCasos] = useState([]);
   const [clientes, setClientes] = useState([]);
   const [abogados, setAbogados] = useState([]);
@@ -165,7 +167,12 @@ export default function Casos() {
                     </span>
                   </td>
                   <td className="px-6 py-4">
-                    <p className="text-white font-medium">{c.titulo}</p>
+                    <p
+                      className="text-white font-medium hover:text-emerald-400 cursor-pointer transition"
+                      onClick={() => navigate(`/casos/${c.id}`)}
+                    >
+                      {c.titulo}
+                    </p>
                     {c.descripcion && <p className="text-gray-600 text-xs mt-0.5 truncate max-w-[200px]">{c.descripcion}</p>}
                   </td>
                   <td className="px-6 py-4 text-gray-400">{c.cliente?.nombre || "—"}</td>
@@ -261,9 +268,7 @@ export default function Casos() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-gray-400 text-xs uppercase tracking-wider mb-1.5 block">
-                    Tipo
-                  </label>
+                  <label className="text-gray-400 text-xs uppercase tracking-wider mb-1.5 block">Tipo</label>
                   <p className="text-gray-600 text-xs mb-2">¿Es una consulta puntual o el abogado va a representar al cliente?</p>
                   <select
                     value={form.tipo}
@@ -277,9 +282,7 @@ export default function Casos() {
                 </div>
 
                 <div>
-                  <label className="text-gray-400 text-xs uppercase tracking-wider mb-1.5 block">
-                    Estado
-                  </label>
+                  <label className="text-gray-400 text-xs uppercase tracking-wider mb-1.5 block">Estado</label>
                   <p className="text-gray-600 text-xs mb-2">¿En qué etapa está el caso actualmente?</p>
                   <select
                     value={form.estado}

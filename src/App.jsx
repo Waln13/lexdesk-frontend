@@ -6,6 +6,7 @@ import Casos from "./pages/casos/Casos";
 import Agenda from "./pages/agenda/Agenda";
 import Abogados from "./pages/abogados/Abogados";
 import Expedientes from "./pages/expedientes/Expedientes";
+import DetalleCaso from "./pages/casos/DetalleCaso";
 
 const PrivateRoute = ({ children }) => {
   const token = localStorage.getItem("token");
@@ -24,6 +25,7 @@ function App() {
         <Route path="/abogados" element={<PrivateRoute><Abogados /></PrivateRoute>} />
         <Route path="/expedientes" element={<PrivateRoute><Expedientes /></PrivateRoute>} />
         <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="/casos/:id" element={<PrivateRoute><DetalleCaso /></PrivateRoute>} />
       </Routes>
     </BrowserRouter>
   );
