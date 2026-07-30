@@ -7,6 +7,7 @@ export default function Clientes() {
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
   const [editando, setEditando] = useState(null);
+  const [busqueda, setBusqueda] = useState("");
   const [form, setForm] = useState({ nombre: "", telefono: "", email: "", direccion: "" });
 
   const cargar = async () => {
@@ -16,6 +17,16 @@ export default function Clientes() {
   };
 
   useEffect(() => { cargar(); }, []);
+
+  const clientesFiltrados = clientes.filter((c) => {
+    const q = busqueda.toLowerCase();
+    return (
+      c.nombre?.toLowerCase().includes(q) ||
+      c.telefono?.toLowerCase().includes(q) ||
+      c.email?.toLowerCase().includes(q) ||
+      c.direccion?.toLowerCase().includes(q)
+    );
+  });
 
   const abrirModal = (cliente = null) => {
     if (cliente) {
@@ -56,14 +67,26 @@ export default function Clientes() {
       <div className="flex items-center justify-between mb-8">
         <div>
           <h2 className="text-2xl font-bold text-white">Clientes</h2>
-          <p className="text-gray-500 text-sm mt-1">{clientes.length} clientes registrados</p>
+          <p className="text-gray-500 text-sm mt-1">{clientesFiltrados.length} clientes registrados</p>
         </div>
-        <button
-          onClick={() => abrirModal()}
-          className="bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition"
-        >
-          + Nuevo Cliente
-        </button>
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <input
+              type="text"
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              placeholder="Buscar por nombre, teléfono, email..."
+              className="bg-gray-800 border border-gray-700 text-white rounded-lg pl-9 pr-4 py-2.5 text-sm placeholder-gray-600 focus:outline-none focus:border-emerald-600 transition w-72"
+            />
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">🔍</span>
+          </div>
+          <button
+            onClick={() => abrirModal()}
+            className="bg-emerald-700 hover:bg-emerald-600 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition"
+          >
+            + Nuevo Cliente
+          </button>
+        </div>
       </div>
 
       {/* Tabla */}
@@ -83,12 +106,14 @@ export default function Clientes() {
               <tr>
                 <td colSpan={5} className="text-center py-12 text-gray-600">Cargando...</td>
               </tr>
-            ) : clientes.length === 0 ? (
+            ) : clientesFiltrados.length === 0 ? (
               <tr>
-                <td colSpan={5} className="text-center py-12 text-gray-600">No hay clientes registrados</td>
+                <td colSpan={5} className="text-center py-12 text-gray-600">
+                  {busqueda ? "Sin resultados" : "No hay clientes registrados"}
+                </td>
               </tr>
             ) : (
-              clientes.map((c) => (
+              clientesFiltrados.map((c) => (
                 <tr key={c.id} className="border-b border-gray-800/50 hover:bg-gray-800/30 transition">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
