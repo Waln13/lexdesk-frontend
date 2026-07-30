@@ -1,4 +1,4 @@
-const API = import.meta.env.VITE_API_URL;
+import API from "../config";
 const getToken = () => localStorage.getItem("token");
 
 export const getDocumentos = async (casoId) => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import MainLayout from "../../components/layout/MainLayout";
+import API from "../../config";
 
-const API = import.meta.env.VITE_API_URL;
 const getToken = () => localStorage.getItem("token");
 
 const ESTADOS = {
