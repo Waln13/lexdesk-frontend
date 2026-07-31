@@ -4,7 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 export default function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { usuario, esdueno, esSecretaria, esAbogado } = useAuth();
+  const { usuario, esdueno, esSecretaria } = useAuth();
 
   const menu = [
     { label: "Dashboard", icon: "⊞", path: "/dashboard", visible: true },
@@ -34,7 +34,10 @@ export default function Sidebar() {
       </div>
 
       {/* Usuario */}
-      <div className="px-6 py-4 border-b border-gray-800">
+      <div
+        className="px-6 py-4 border-b border-gray-800 cursor-pointer hover:bg-gray-800/50 transition"
+        onClick={() => navigate("/perfil")}
+      >
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-yellow-700/40 border border-yellow-700/60 flex items-center justify-center text-yellow-400 text-sm font-bold">
             {usuario?.nombre?.charAt(0) || "U"}
@@ -81,4 +84,4 @@ export default function Sidebar() {
       </div>
     </aside>
   );
-} 
+}

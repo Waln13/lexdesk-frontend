@@ -8,7 +8,7 @@ export default function Clientes() {
   const [modal, setModal] = useState(false);
   const [editando, setEditando] = useState(null);
   const [busqueda, setBusqueda] = useState("");
-  const [form, setForm] = useState({ nombre: "", telefono: "", email: "", direccion: "" });
+  const [form, setForm] = useState({ nombre: "", telefono: "", email: "", direccion: "", cedula: "" });
 
   const cargar = async () => {
     const data = await getClientes();
@@ -31,10 +31,10 @@ export default function Clientes() {
   const abrirModal = (cliente = null) => {
     if (cliente) {
       setEditando(cliente);
-      setForm({ nombre: cliente.nombre, telefono: cliente.telefono || "", email: cliente.email || "", direccion: cliente.direccion || "" });
+      setForm({ nombre: cliente.nombre, telefono: cliente.telefono || "", email: cliente.email || "", direccion: cliente.direccion || "", cedula: cliente.cedula || "" });
     } else {
       setEditando(null);
-      setForm({ nombre: "", telefono: "", email: "", direccion: "" });
+      setForm({ nombre: "", telefono: "", email: "", direccion: "", cedula: "" });
     }
     setModal(true);
   };
@@ -95,6 +95,7 @@ export default function Clientes() {
           <thead>
             <tr className="border-b border-gray-800 text-gray-500 text-xs uppercase tracking-wider">
               <th className="text-left px-6 py-4">Nombre</th>
+              <th className="text-left px-6 py-4">Cédula</th>
               <th className="text-left px-6 py-4">Teléfono</th>
               <th className="text-left px-6 py-4">Email</th>
               <th className="text-left px-6 py-4">Casos</th>
@@ -104,11 +105,11 @@ export default function Clientes() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={5} className="text-center py-12 text-gray-600">Cargando...</td>
+                <td colSpan={6} className="text-center py-12 text-gray-600">Cargando...</td>
               </tr>
             ) : clientesFiltrados.length === 0 ? (
               <tr>
-                <td colSpan={5} className="text-center py-12 text-gray-600">
+                <td colSpan={6} className="text-center py-12 text-gray-600">
                   {busqueda ? "Sin resultados" : "No hay clientes registrados"}
                 </td>
               </tr>
@@ -123,6 +124,7 @@ export default function Clientes() {
                       <span className="text-white font-medium">{c.nombre}</span>
                     </div>
                   </td>
+                  <td className="px-6 py-4 text-gray-400 font-mono text-xs">{c.cedula || "—"}</td>
                   <td className="px-6 py-4 text-gray-400">{c.telefono || "—"}</td>
                   <td className="px-6 py-4 text-gray-400">{c.email || "—"}</td>
                   <td className="px-6 py-4">
@@ -164,6 +166,7 @@ export default function Clientes() {
             <div className="space-y-4">
               {[
                 { label: "Nombre", key: "nombre", placeholder: "Nombre completo", required: true },
+                { label: "Cédula", key: "cedula", placeholder: "000-0000000-0" },
                 { label: "Teléfono", key: "telefono", placeholder: "809-555-0000" },
                 { label: "Email", key: "email", placeholder: "correo@ejemplo.com" },
                 { label: "Dirección", key: "direccion", placeholder: "Ciudad, RD" },
