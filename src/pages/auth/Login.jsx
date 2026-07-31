@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../config";
+import logo from "../../assets/logo.png";
+
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -79,10 +81,10 @@ export default function Login() {
             <div className="h-px w-12 bg-yellow-700/60" />
           </div>
           <img
-            src="/src/assets/logo.png"
-            alt="Grupo Legal F. Contreras"
-            className="h-32 mx-auto object-contain"
-          />
+             src={logo}
+               alt="Grupo Legal F. Contreras"
+              className="h-32 mx-auto object-contain"
+              />
           <p className="text-gray-500 mt-3 text-xs tracking-widest uppercase">
             Sistema de Gestión
           </p>

@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import logo from "../../assets/logo.png";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -27,8 +28,8 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="px-6 py-5 border-b border-gray-800 flex items-center justify-center">
         <img
-          src="/src/assets/logo.png"
-          alt="Grupo Legal F. Contreras"
+          src={logo}
+           alt="Grupo Legal F. Contreras"
           className="h-16 object-contain"
         />
       </div>
