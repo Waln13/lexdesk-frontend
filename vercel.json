@@ -1,5 +1,5 @@
 {
-  "buildCommand": "vite build --force",
+  "buildCommand": "vite build",
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
