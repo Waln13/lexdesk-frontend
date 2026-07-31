@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import logo from "../../assets/logo.png";
 
-export default function Sidebar() {
+export default function Sidebar({ onClose }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { usuario, esdueno, esSecretaria } = useAuth();
@@ -22,22 +22,33 @@ export default function Sidebar() {
     navigate("/login");
   };
 
+  const handleNavigate = (path) => {
+    navigate(path);
+    if (onClose) onClose();
+  };
+
   return (
     <aside className="w-64 min-h-screen bg-gray-900 border-r border-gray-800 flex flex-col">
 
       {/* Logo */}
-      <div className="px-6 py-5 border-b border-gray-800 flex items-center justify-center">
+      <div className="px-6 py-5 border-b border-gray-800 flex items-center justify-between">
         <img
           src={logo}
-           alt="Grupo Legal F. Contreras"
+          alt="Grupo Legal F. Contreras"
           className="h-16 object-contain"
         />
+        <button
+          onClick={onClose}
+          className="lg:hidden text-gray-500 hover:text-white text-xl"
+        >
+          ✕
+        </button>
       </div>
 
       {/* Usuario */}
       <div
         className="px-6 py-4 border-b border-gray-800 cursor-pointer hover:bg-gray-800/50 transition"
-        onClick={() => navigate("/perfil")}
+        onClick={() => handleNavigate("/perfil")}
       >
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-yellow-700/40 border border-yellow-700/60 flex items-center justify-center text-yellow-400 text-sm font-bold">
@@ -59,7 +70,7 @@ export default function Sidebar() {
           return (
             <button
               key={item.path}
-              onClick={() => navigate(item.path)}
+              onClick={() => handleNavigate(item.path)}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition ${
                 active
                   ? "bg-yellow-700/20 text-yellow-400 border border-yellow-700/30"
